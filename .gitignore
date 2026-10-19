@@ -1,0 +1,29 @@
+# Модели и веса
+GigaAM/
+*.pt
+*.ckpt
+*.onnx
+
+# Аудио и результаты
+*.wav
+*.mp4
+*.mkv
+temp_chunks/
+lecture_*.txt
+output/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Секреты
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
