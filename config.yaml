@@ -1,0 +1,22 @@
+audio:
+  sample_rate: 16000
+  channels: 1
+  chunk_seconds: 20
+  silence_threshold: 0.01
+
+model:
+  name: v3_e2e_rnnt
+  device: auto  # auto | cuda | cpu
+
+paths:
+  temp_dir: temp_chunks
+  output_dir: output
+
+summarize:
+  enabled: true
+  provider: deepseek
+  prompt: |
+    Составь конспект лекции по транскрипту ниже.
+    Сохрани таймкоды в формате [ЧЧ:ММ:СС], сгруппируй по темам.
+    ---
+    {transcript}

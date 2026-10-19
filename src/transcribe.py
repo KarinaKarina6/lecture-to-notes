@@ -10,6 +10,8 @@ load_secrets()
 
 
 def transcribe_long_audio(audio_path: Path, cfg: dict, out_txt: Path) -> None:
+    out_txt.parent.mkdir(parents=True, exist_ok=True)
+
     model = gigaam.load_model(cfg["model"]["name"])
     data, sr = sf.read(audio_path, dtype="float32")
 
