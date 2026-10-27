@@ -21,3 +21,6 @@ git clone <repo>
 cd lecture-to-notes
 python -m venv .venv && .venv\Scripts\activate  # Windows
 pip install -r requirements.txt
+
+# Запуск
+# python -m scripts.run_pipeline --input test.mp4
