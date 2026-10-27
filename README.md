@@ -19,7 +19,8 @@
 ```bash
 git clone <repo>
 cd lecture-to-notes
-python -m venv .venv && .venv\Scripts\activate  # Windows
+python -m venv .venv
+.venv\Scripts\activate  
 pip install -r requirements.txt
 ```
 
