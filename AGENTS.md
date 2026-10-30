@@ -1,29 +1,33 @@
-# AGENTS.md — Инструкции для ИИ в проекте `lecture-to-notes`
+# AGENTS.md
 
-## 🎯 О проекте
-Пайплайн для транскрибации длинных видео (GigaAM-v3) и генерации конспектов через LLM. 
-Среда разработки: **Windows 11**, **Python**. 
-Аппаратное ограничение: **4 ГБ VRAM** (RTX 3050 Ti). Не предлагай решения, требующие больше памяти.
+## Project Overview
+Pipeline for transcribing long video lectures (GigaAM-v3) and generating notes (LLM).
+Environment: **Windows 11**, Python.
+Hardware constraint: **4 GB VRAM** (RTX 3050 Ti). Do not suggest solutions requiring more VRAM or large batch sizes.
 
-## ⚠️ Критические правила и ограничения (Gotchas)
-- **GigaAM-v3 и чанки:** Модель не справляется с длинными файлами. Пайплайн **обязан** нарезать аудио на 20-секундные чанки (`src/` / `scripts/`) и склеивать результаты с восстановлением таймкодов. Не предлагай передавать полный файл в модель напрямую.
-- **Windows-специфика:** Проект запускается на Windows. При написании скриптов (особенно в `scripts/`) учитывай пути (`\`), кодировки и активацию venv (`.venv\Scripts\activate`).
-- **Управление зависимостями:** Используется только стандартный `pip` и `requirements.txt`. **НЕ** используй `poetry`, `uv` или `conda` без явной просьбы.
-- **Конфигурация:** Настройки пайплайна (пути, параметры моделей) вынесены в `config.yaml`. Секреты и ключи API — только через `.env` (см. `.env.example`).
+## Commands
+- **Setup:**
+  `python -m venv .venv`
+  `.venv\Scripts\activate` (Windows-specific)
+  `pip install -r requirements.txt`
+- **Run Pipeline:** `python -m scripts.run_pipeline --input <path_to_video>`
+- **Run Tests:** `pytest tests/`
 
-## 🏗️ Архитектура и структура
-- `src/` — основная бизнес-логика (классы, обертки над GigaAM, обработка аудио).
-- `scripts/` — исполняемые скрипты. Главная точка входа: `scripts/run_pipeline.py`.
-- `tests/` — тесты (используется `pytest`). Особое внимание тестам на наличие FFmpeg и обработку ошибок конвертации.
-- `docs/` — документация.
+## Architecture & Entrypoints
+- `scripts/run_pipeline.py`: Main executable entrypoint.
+- `src/`: Core business logic (audio conversion, transcription).
+- `config.yaml`: Pipeline settings and model parameters.
 
-## 🚀 Команды (выполнять из корня проекта)
-- **Установка:** `pip install -r requirements.txt`
-- **Запуск пайплайна:** `python -m scripts.run_pipeline --input <путь_к_видео>`
-- **Запуск тестов:** `pytest tests/` (убедись, что FFmpeg доступен в PATH перед запуском тестов)
+## Critical Gotchas & Quirks
+- **FFmpeg:** Must be installed and available in the system `PATH`. The pipeline will fail otherwise.
+- **GigaAM-v3 Chunking:** The model cannot process long files directly. The pipeline *must* slice audio into **20-second chunks** and restore timestamps during concatenation.
+- **Testing:** Tests specifically check for FFmpeg availability and audio conversion error handling.
 
-## 💻 Стиль кода
-- Следуй стандартному PEP 8.
-- **Типизация:** Весь новый код в `src/` и `scripts/` должен быть аннотирован типами (type hints).
-- **Логирование:** Используй модуль `logging` вместо `print()`. Уровень логирования должен настраиваться (см. как это сделано в `run_pipeline.py`).
-- **Обработка ошибок:** Любые внешние вызовы (FFmpeg, API LLM, загрузка моделей) должны быть обернуты в `try-except` с понятными сообщениями об ошибках.
+## Notes & Gotchas
+- **Secrets:** Copy `.env.example` to `.env`; it must contain `HF_TOKEN` (required at import time of `src.transcribe`) and `DEEPSEEK_API_KEY`.
+- **Summarization:** `summarize.enabled: true` (provider: deepseek) is set in `config.yaml`, but the LLM summarization step is **not implemented** yet — the pipeline currently produces only the transcript.
+- **Model version:** GigaAM is installed from a pinned git commit in `requirements.txt`; do not bump it casually.
+- **requirements.txt encoding:** UTF-16 (LE) with CRLF line endings — preserve encoding when editing.
+- **Outputs:** Transcript → `output/<stem>_transcript.txt`; log → `output/pipeline.log`; temp chunks in `temp_chunks/` (auto-deleted after processing).
+- **Tooling:** No CI, lint, typecheck, or additional test configuration exists; verification today is `pytest tests/`.
+- **Windows paths:** Use `\` path separators in scripts/shell commands; be mindful of encoding issues.
