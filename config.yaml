@@ -13,7 +13,7 @@ paths:
   output_dir: output
 
 summarize:
-  enabled: true
+  enabled: true  # Установите false, если нужно отключить генерацию конспекта
   provider: gemini
   model_name: gemini-3.5-flash-lite
   prompt: |

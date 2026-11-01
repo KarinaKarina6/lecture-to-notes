@@ -29,3 +29,5 @@ pip install -r requirements.txt
 ```bash
 python -m scripts.run_pipeline --input test.mp4
 ```
+
+> **Совет:** Вы можете полностью отключить генерацию конспекта (оставив только сырой транскрипт), установив `enabled: false` для блока `summarize` в файле `config.yaml`. В этом случае наличие `GEMINI_API_KEY` в окружении не потребуется.
