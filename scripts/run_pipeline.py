@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 
 from src.audio import AudioConversionError, convert_to_wav
 from src.logging_setup import setup_logging
+from src.summarize import summarize_transcript
 from src.transcribe import transcribe_long_audio
 
 logger = logging.getLogger(__name__)
@@ -36,10 +37,12 @@ def main() -> int:
     stem = args.input.stem
     wav_path = out_dir / f"{stem}.wav"
     txt_path = out_dir / f"{stem}_transcript.txt"
+    notes_path = out_dir / f"{stem}_notes.md"
 
     try:
         convert_to_wav(args.input, wav_path, cfg["audio"]["sample_rate"])
         transcribe_long_audio(wav_path, cfg, txt_path)
+        summarize_transcript(txt_path, notes_path, cfg)
     except AudioConversionError as e:
         logger.error("Конвертация не удалась: %s", e)
         return 1
@@ -47,7 +50,7 @@ def main() -> int:
         logger.exception("Необработанная ошибка пайплайна")
         return 1
 
-    logger.info("Готово: %s", txt_path)
+    logger.info("Готово: транскрипт -> %s, конспект -> %s", txt_path, notes_path)
     return 0
 
 
