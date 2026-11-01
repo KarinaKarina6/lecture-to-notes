@@ -27,7 +27,7 @@ Hardware constraint: **4 GB VRAM** (RTX 3050 Ti). Do not suggest solutions requi
 - **Secrets:** Copy `.env.example` to `.env`; it must contain `HF_TOKEN` (required at import time of `src.transcribe`) and `DEEPSEEK_API_KEY`.
 - **Summarization:** `summarize.enabled: true` (provider: deepseek) is set in `config.yaml`, but the LLM summarization step is **not implemented** yet — the pipeline currently produces only the transcript.
 - **Model version:** GigaAM is installed from a pinned git commit in `requirements.txt`; do not bump it casually.
-- **requirements.txt encoding:** UTF-16 (LE) with CRLF line endings — preserve encoding when editing.
+- **requirements.txt encoding:** UTF-8.
 - **Outputs:** Transcript → `output/<stem>_transcript.txt`; log → `output/pipeline.log`; temp chunks in `temp_chunks/` (auto-deleted after processing).
 - **Tooling:** No CI, lint, typecheck, or additional test configuration exists; verification today is `pytest tests/`.
 - **Windows paths:** Use `\` path separators in scripts/shell commands; be mindful of encoding issues.
