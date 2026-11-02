@@ -1,6 +1,10 @@
 # Lecture to Notes
 
 [![CI](https://github.com/KarinaKarina6/lecture-to-notes/actions/workflows/ci.yml/badge.svg)](https://github.com/KarinaKarina6/lecture-to-notes/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-blue?logo=python&logoColor=white)
+![Platform](https://img.shields.io/badge/Platform-Windows%2011-lightgrey?logo=windows)
+![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=flat&logo=PyTorch&logoColor=white)
+![Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=flat&logo=google&logoColor=white)
 
 Транскрибация длинных видеолекций в текст с таймкодами и автоматический конспект. Оптимизировано под ноутбук с 4 ГБ VRAM (NVIDIA RTX 3050 Ti, Windows 11).
 
