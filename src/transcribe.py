@@ -1,3 +1,4 @@
+import logging
 import os
 import time
 from pathlib import Path
@@ -6,11 +7,23 @@ import soundfile as sf
 import gigaam
 from src.config import load_secrets
 
+logger = logging.getLogger(__name__)
+
 load_secrets()
 
 
 def transcribe_long_audio(audio_path: Path, cfg: dict, out_txt: Path) -> None:
     out_txt.parent.mkdir(parents=True, exist_ok=True)
+
+    try:
+        import torch
+        if torch.cuda.is_available():
+            device_name = torch.cuda.get_device_name(0)
+            logger.info("Используется устройство: GPU (%s)", device_name)
+        else:
+            logger.warning("GPU недоступен, используется CPU! Это может быть медленно.")
+    except Exception:
+        logger.info("Не удалось проверить статус GPU через torch")
 
     model = gigaam.load_model(cfg["model"]["name"])
     data, sr = sf.read(audio_path, dtype="float32")
@@ -40,6 +53,12 @@ def transcribe_long_audio(audio_path: Path, cfg: dict, out_txt: Path) -> None:
                 f.write(f"[{time_str}] [ОШИБКА: {e}]\n")
             finally:
                 temp_file.unlink(missing_ok=True)
+                try:
+                    import torch
+                    if torch.cuda.is_available():
+                        torch.cuda.empty_cache()
+                except Exception:
+                    pass
 
     print(f"Готово за {round((time.time() - start_time) / 60, 1)} мин → {out_txt}")
 

@@ -5,9 +5,9 @@
 ## Пайплайн
 
 1. FFmpeg → моно WAV 16 кГц
-2. Нарезка на 20-секундные чанки (обход ограничений GigaAM на длинных файлах)
+2. Нарезка на 20-секундные чанки (обход ограничений GigaAM на длинных файлах с очисткой CUDA VRAM после каждого чанка)
 3. Инференс GigaAM-v3 (e2e_rnnt) с восстановлением таймкодов
-4. (опционально) Конспект через LLM API
+4. (опционально) Конспект через LLM API (Gemini 3.5 Flash Lite)
 
 ## Результат
 
@@ -20,7 +20,7 @@
 git clone <repo>
 cd lecture-to-notes
 python -m venv .venv
-.venv\Scripts\activate  
+.venv\Scripts\activate  # На Windows
 pip install -r requirements-dev.txt
 ```
 
@@ -28,6 +28,14 @@ pip install -r requirements-dev.txt
 
 ```bash
 python -m scripts.run_pipeline --input test.mp4
+```
+
+## Тестирование
+
+Для запуска модульных тестов используйте pytest:
+
+```bash
+python -m pytest
 ```
 
 > **Совет:** Вы можете полностью отключить генерацию конспекта (оставив только сырой транскрипт), установив `enabled: false` для блока `summarize` в файле `config.yaml`. В этом случае наличие `GEMINI_API_KEY` в окружении не потребуется.
