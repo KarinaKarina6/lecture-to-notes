@@ -50,6 +50,13 @@ python -m venv .venv
 python -m scripts.run_pipeline --input test.mp4
 ```
 
+## Пример вывода
+
+Фрагменты реального прогона (обезличены) — в папке [`examples/`](/example/):
+
+- [`sample_transcript.txt`](/example/sample_transcript.txt) — транскрипт с таймкодами
+- [`sample_notes.md`](/example/sample_notes.md) — автоматический конспект
+
 ## Тестирование
 
 Для запуска модульных тестов используйте pytest:
