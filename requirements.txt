@@ -1,6 +1,6 @@
 gigaam @ git+https://github.com/salute-developers/GigaAM.git@7447938d791c4f3e643386ee22c33777004293a5
 numpy>=1.26.0,<3.0
-protobuf>=4.21.0,<6.0
+protobuf>=4.21.0,<8.0.0
 python-dotenv==1.2.4
 PyYAML==6.0.3
 soundfile==0.14.0

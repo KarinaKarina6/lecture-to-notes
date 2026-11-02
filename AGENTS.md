@@ -1,5 +1,3 @@
-# AGENTS.md
-
 ## Project Overview
 Pipeline for transcribing long video lectures (GigaAM-v3) and generating notes (LLM).
 Environment: **Windows 11**, Python.
