@@ -7,7 +7,7 @@
 1. FFmpeg → моно WAV 16 кГц
 2. Нарезка на 20-секундные чанки (обход ограничений GigaAM на длинных файлах с очисткой CUDA VRAM после каждого чанка)
 3. Инференс GigaAM-v3 (e2e_rnnt) с восстановлением таймкодов
-4. (опционально) Конспект через LLM API (Gemini 3.5 Flash Lite)
+4. (опционально) Конспект через LLM API (Gemini — в частности, `gemini-3.5-flash-lite`)
 
 ## Результат
 
@@ -21,8 +21,22 @@ git clone <repo>
 cd lecture-to-notes
 python -m venv .venv
 .venv\Scripts\activate  # На Windows
-pip install -r requirements-dev.txt
 ```
+
+Затем установите зависимости в зависимости от того, используется ли у вас GPU (с поддержкой CUDA) или только CPU:
+
+- **С использованием GPU (CUDA):**
+  ```bash
+  pip install -r requirements-cuda.txt 
+  pip install -r requirements.txt
+  ```
+
+
+- **Только для CPU:**
+  ```bash
+  pip install -r requirements.txt
+  ```
+*(при необходимости разработки и тестирования установите также `pip install -r requirements-dev.txt`)*
 
 ## Запуск
 

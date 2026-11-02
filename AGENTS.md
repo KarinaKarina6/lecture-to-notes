@@ -22,10 +22,11 @@ Hardware constraint: **4 GB VRAM** (RTX 3050 Ti). Do not suggest solutions requi
 - **Testing:** Tests specifically check for FFmpeg availability and audio conversion error handling.
 
 ## Notes & Gotchas
-- **Secrets:** Copy `.env.example` to `.env`; it must contain `HF_TOKEN` (required at import time of `src.transcribe`) and `DEEPSEEK_API_KEY`.
-- **Summarization:** `summarize.enabled: true` (provider: deepseek) is set in `config.yaml`, but the LLM summarization step is **not implemented** yet — the pipeline currently produces only the transcript.
+- **Secrets:** Copy `.env.example` to `.env`; it must contain `HF_TOKEN` (required at import time of `src.transcribe`) and `GEMINI_API_KEY` (or `GOOGLE_API_KEY`).
+- **Summarization:** LLM summarization via Google Gemini is implemented in `src/summarize.py`. In `config.yaml`, `summarize.enabled` defaults to `false` and `provider` is set to `gemini` (using `gemini-3.5-flash-lite`).
 - **Model version:** GigaAM is installed from a pinned git commit in `requirements.txt`; do not bump it casually.
 - **requirements.txt encoding:** UTF-8.
-- **Outputs:** Transcript → `output/<stem>_transcript.txt`; log → `output/pipeline.log`; temp chunks in `temp_chunks/` (auto-deleted after processing).
+- **Outputs:** Transcript → `output/<stem>_transcript.txt`; Notes → `output/<stem>_notes.md`; log → `output/pipeline.log`; temp chunks in `temp_chunks/` (auto-deleted after processing).
 - **Tooling:** No CI, lint, typecheck, or additional test configuration exists; verification today is `pytest tests/`.
 - **Windows paths:** Use `\` path separators in scripts/shell commands; be mindful of encoding issues.
+- **Chunk Silence Threshold:** The silence check uses `np.max(np.abs(chunk)) < cfg["audio"]["silence_threshold"]`, which checks absolute maximum value rather than RMS. This may occasionally cause false positives for quiet speech.
