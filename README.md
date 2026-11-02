@@ -1,5 +1,7 @@
 # Lecture to Notes
 
+[![CI](https://github.com/KarinaKarina6/lecture-to-notes/actions/workflows/ci.yml/badge.svg)](https://github.com/KarinaKarina6/lecture-to-notes/actions/workflows/ci.yml)
+
 Транскрибация длинных видеолекций в текст с таймкодами и автоматический конспект. Оптимизировано под ноутбук с 4 ГБ VRAM (NVIDIA RTX 3050 Ti, Windows 11).
 
 ## Пайплайн
