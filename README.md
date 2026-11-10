@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/KarinaKarina6/lecture-to-notes/actions/workflows/ci.yml/badge.svg)](https://github.com/KarinaKarina6/lecture-to-notes/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-blue?logo=python&logoColor=white)
-![Platform](https://img.shields.io/badge/Platform-Cross--platform%20(Linux%20%2F%20Windows)-lightgrey)
+![Platform](https://img.shields.io/badge/Platform-Cross--platform%20(Linux%20%2F%20macOS%20%2F%20Windows)-lightgrey)
 ![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=flat&logo=PyTorch&logoColor=white)
 ![Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=flat&logo=google&logoColor=white)
 
@@ -10,6 +10,14 @@
 
 ## Архитектура
 ![Архитектура пайплайна](docs/pipeline_architecture.png)
+
+## Требования к системе и окружению
+- **ОС:** Кроссплатформенность (Linux, macOS, Windows).
+- **FFmpeg:** Обязательно должен быть установлен и доступен в системной переменной `PATH`:
+  - **macOS:** `brew install ffmpeg`
+  - **Linux (Ubuntu/Debian):** `sudo apt update && sudo apt install ffmpeg`
+  - **Windows:** Установите через `winget install Gyan.FFmpeg` или скачайте с официального сайта.
+- **Аппаратные ограничения:** Пайплайн оптимизирован под системы с ограниченными ресурсами (например, ноутбуки с 4 ГБ VRAM, RTX 3050 Ti). На macOS поддерживается выполнение на CPU или с использованием PyTorch MPS.
 
 ## Пайплайн
 

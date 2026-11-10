@@ -1,6 +1,6 @@
 ## Project Overview
 Pipeline for transcribing long video lectures (GigaAM-v3) and generating notes (LLM).
-Environment: **Cross-platform (Linux / Windows)**, Python.
+Environment: **Cross-platform (Linux / macOS / Windows)**, Python.
 Hardware constraint: **4 GB VRAM** (RTX 3050 Ti / similar entry-level GPUs). Do not suggest solutions requiring more VRAM or large batch sizes.
 
 ## Commands
@@ -30,5 +30,5 @@ Hardware constraint: **4 GB VRAM** (RTX 3050 Ti / similar entry-level GPUs). Do 
 - **requirements.txt encoding:** UTF-8.
 - **Outputs:** Transcript → `output/<stem>_transcript.txt`; Notes → `output/<stem>_notes.md`; log → `output/pipeline.log`; temp chunks in `temp_chunks/` (auto-deleted after processing).
 - **Tooling:** No CI, lint, typecheck, or additional test configuration exists; verification today is `pytest tests/`.
-- **Windows/Linux paths:** Use `pathlib.Path` in scripts for cross-platform compatibility; be mindful of path separators and encoding issues.
+- **Windows / Linux / macOS paths:** Use `pathlib.Path` in scripts for cross-platform compatibility; be mindful of path separators and encoding issues.
 - **Chunk Silence Threshold:** The silence check uses `np.max(np.abs(chunk)) < cfg["audio"]["silence_threshold"]`, which checks absolute maximum value rather than RMS. This may occasionally cause false positives for quiet speech.
