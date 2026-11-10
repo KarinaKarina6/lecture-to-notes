@@ -1,13 +1,15 @@
 ## Project Overview
 Pipeline for transcribing long video lectures (GigaAM-v3) and generating notes (LLM).
-Environment: **Windows 11**, Python.
-Hardware constraint: **4 GB VRAM** (RTX 3050 Ti). Do not suggest solutions requiring more VRAM or large batch sizes.
+Environment: **Cross-platform (Linux / Windows)**, Python.
+Hardware constraint: **4 GB VRAM** (RTX 3050 Ti / similar entry-level GPUs). Do not suggest solutions requiring more VRAM or large batch sizes.
 
 ## Commands
 - **Setup:**
   `python -m venv .venv`
-  `.venv\Scripts\activate` (Windows-specific)
+  - Linux/macOS: `source .venv/bin/activate`
+  - Windows: `.venv\Scripts\activate`
   `pip install -r requirements.txt`
+  *(Optional: `pip install -r requirements-cuda.txt` or `pip install -r requirements-dev.txt`)*
 - **Run Pipeline:** `python -m scripts.run_pipeline --input <path_to_video>`
 - **Run Tests:** `pytest tests/`
 
@@ -28,5 +30,5 @@ Hardware constraint: **4 GB VRAM** (RTX 3050 Ti). Do not suggest solutions requi
 - **requirements.txt encoding:** UTF-8.
 - **Outputs:** Transcript → `output/<stem>_transcript.txt`; Notes → `output/<stem>_notes.md`; log → `output/pipeline.log`; temp chunks in `temp_chunks/` (auto-deleted after processing).
 - **Tooling:** No CI, lint, typecheck, or additional test configuration exists; verification today is `pytest tests/`.
-- **Windows paths:** Use `\` path separators in scripts/shell commands; be mindful of encoding issues.
+- **Windows/Linux paths:** Use `pathlib.Path` in scripts for cross-platform compatibility; be mindful of path separators and encoding issues.
 - **Chunk Silence Threshold:** The silence check uses `np.max(np.abs(chunk)) < cfg["audio"]["silence_threshold"]`, which checks absolute maximum value rather than RMS. This may occasionally cause false positives for quiet speech.
