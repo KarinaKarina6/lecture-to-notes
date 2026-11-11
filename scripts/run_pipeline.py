@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 
 from src.audio import AudioConversionError, convert_to_wav
 from src.logging_setup import setup_logging
+from src.preprocess import preprocess_transcript_file
 from src.summarize import summarize_transcript
 from src.transcribe import transcribe_long_audio
 
@@ -42,6 +43,7 @@ def main() -> int:
     try:
         convert_to_wav(args.input, wav_path, cfg["audio"]["sample_rate"])
         transcribe_long_audio(wav_path, cfg, txt_path)
+        preprocess_transcript_file(txt_path, cfg=cfg)
         summarize_transcript(txt_path, notes_path, cfg)
     except AudioConversionError as e:
         logger.error("Конвертация не удалась: %s", e)
