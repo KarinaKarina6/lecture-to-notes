@@ -11,6 +11,8 @@ GigaAM/
 temp_chunks/
 lecture_*.txt
 output/
+vector_store/
+vector_store_*/
 
 # Python
 __pycache__/
