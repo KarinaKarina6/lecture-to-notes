@@ -12,6 +12,9 @@ paths:
   temp_dir: temp_chunks
   output_dir: output
 
+preprocess:
+  enabled: true  # Создавать ли очищенный для RAG транскрипт (<stem>_rag_clean.txt)
+
 summarize:
   enabled: false  # Установите true, если нужно включить генерацию конспекта
   provider: gemini
